@@ -42,13 +42,13 @@ public class ProductController {
 //
 //    }
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    private ExceptionDto handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
-        ExceptionDto exceptionDto = new ExceptionDto();
-        exceptionDto.setMessage(productNotFoundException.getMessage());
-        exceptionDto.setStatus("FAILURE");
-        return exceptionDto;
-    }
+//    @ExceptionHandler(ProductNotFoundException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    @ResponseBody
+//    private ExceptionDto handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
+//        ExceptionDto exceptionDto = new ExceptionDto();
+//        exceptionDto.setMessage(productNotFoundException.getMessage());
+//        exceptionDto.setStatus("FAILURE");
+//        return exceptionDto;
+//    }
 }
