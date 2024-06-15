@@ -17,7 +17,7 @@ import java.util.List;
 public class FakeStoreProductServiceImpl implements ProductService{
 
     private RestTemplateBuilder restTemplateBuilder;
-    private String getProductUrl = "https://fakestoreapi.com/products/1";
+    private String getProductUrl = "https://fakestoreapi.com/products/{id}";
     private String getProductsUrl = "https://fakestoreapi.com/products";
 
     @Autowired
@@ -28,7 +28,7 @@ public class FakeStoreProductServiceImpl implements ProductService{
     @Override
     public Product getProductById(Long id) {
         RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class);
+        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class, id);
         return getProductsFromFakeStoreProductDto(responseEntity.getBody());
     }
 
