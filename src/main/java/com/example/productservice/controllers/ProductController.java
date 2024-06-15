@@ -1,13 +1,13 @@
 package com.example.productservice.controllers;
 
+import com.example.productservice.dtos.ExceptionDto;
+import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
 import com.example.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +29,7 @@ public class ProductController {
 //    }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id) {
+    public Product getProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
       return productService.getProductById(id);
     }
 
@@ -41,4 +41,14 @@ public class ProductController {
 //    public  String getProductByCategory(String category) {
 //
 //    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    private ExceptionDto handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
+        ExceptionDto exceptionDto = new ExceptionDto();
+        exceptionDto.setMessage(productNotFoundException.getMessage());
+        exceptionDto.setStatus("FAILURE");
+        return exceptionDto;
+    }
 }
