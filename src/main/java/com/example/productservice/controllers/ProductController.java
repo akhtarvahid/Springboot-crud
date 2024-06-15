@@ -7,7 +7,6 @@ import com.example.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -44,11 +43,12 @@ public class ProductController {
 //    }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    private ResponseEntity<ExceptionDto> handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    private ExceptionDto handleProductNotFoundException(ProductNotFoundException productNotFoundException) {
         ExceptionDto exceptionDto = new ExceptionDto();
         exceptionDto.setMessage(productNotFoundException.getMessage());
         exceptionDto.setStatus("FAILURE");
-        ResponseEntity<ExceptionDto> response = new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
-        return response;
+        return exceptionDto;
     }
 }
