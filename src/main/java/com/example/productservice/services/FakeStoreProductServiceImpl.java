@@ -4,11 +4,15 @@ import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
+import com.example.productservice.thirdpartyclients.FakeStoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedList;
@@ -16,43 +20,34 @@ import java.util.List;
 
 @Service("FakeProductService")
 public class FakeStoreProductServiceImpl implements ProductService{
+    private FakeStoreClient fakeStoreClient;
 
     private RestTemplateBuilder restTemplateBuilder;
     private String getProductUrl = "https://fakestoreapi.com/products/{id}";
     private String genericProductUrl = "https://fakestoreapi.com/products";
 
     @Autowired
-    public FakeStoreProductServiceImpl(@Qualifier("restTemplateBuilder") RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplateBuilder = restTemplateBuilder;
+    public FakeStoreProductServiceImpl(FakeStoreClient fakeStoreClient) {
+        this.fakeStoreClient = fakeStoreClient;
     }
 
     @Override
     public Product getProductById(Long id) throws ProductNotFoundException {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class, id);
-        if(responseEntity.getBody() == null) {
-            // Throw exception
-            throw new ProductNotFoundException("Product with id " + id + " not found");
-        }
-        return getProductsFromFakeStoreProductDto(responseEntity.getBody());
+        return getProductsFromFakeStoreProductDto(fakeStoreClient.getProductById(id));
     }
 
     @Override
     public List<Product> getAllProducts() {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto[]> responseEntity = restTemplate.getForEntity(genericProductUrl, FakeStoreProductDto[].class);
-        List<Product> list = new LinkedList<>();
-        for (FakeStoreProductDto fakeStoreProductDto: responseEntity.getBody()) {
-            list.add(getProductsFromFakeStoreProductDto(fakeStoreProductDto));
+        List<Product> products = new LinkedList<>();
+        for (FakeStoreProductDto fakeStoreProductDto: fakeStoreClient.getAllProducts()) {
+            products.add(getProductsFromFakeStoreProductDto(fakeStoreProductDto));
         }
-        return list;
+        return products;
     }
 
     @Override
     public Product createProduct(Product product) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.postForEntity(genericProductUrl, getFakeStoreProductDtoFromProduct(product), FakeStoreProductDto.class);
-        return getProductsFromFakeStoreProductDto(responseEntity.getBody());
+        return getProductsFromFakeStoreProductDto(fakeStoreClient.createProduct(getFakeStoreProductDtoFromProduct(product)));
     }
 
     @Override
@@ -62,10 +57,7 @@ public class FakeStoreProductServiceImpl implements ProductService{
 
     @Override
     public Product deleteProduct(Long id) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        restTemplate.delete(getProductUrl, id);
-        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class, id);
-        return getProductsFromFakeStoreProductDto(responseEntity.getBody());
+        return getProductsFromFakeStoreProductDto(fakeStoreClient.deleteProduct(id));
     }
 
     @Override
