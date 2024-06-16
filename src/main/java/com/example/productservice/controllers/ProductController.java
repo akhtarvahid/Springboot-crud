@@ -38,6 +38,12 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        System.out.println(product);
+
+        return productService.createProduct(product);
+    }
 //    public  String getProductByCategory(String category) {
 //
 //    }
