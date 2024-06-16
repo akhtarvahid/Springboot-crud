@@ -17,12 +17,15 @@ public class FakeStoreClient {
 
     private RestTemplateBuilder restTemplateBuilder;
     private String genericProductUrl = "https://fakestoreapi.com/products";
+    @Value("${fakeStore.api.url}")
     private String getProductUrl;
 
     @Autowired
-    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder, @Value("${fakeStore.api.url}") String fakeStoreApiUrl) {
+    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder
+//                           ,@Value("${fakeStore.api.url}") String fakeStoreApiUrl
+    ) {
         this.restTemplateBuilder = restTemplateBuilder;
-        this.getProductUrl = fakeStoreApiUrl;
+//        this.getProductUrl = fakeStoreApiUrl;
     }
 
 
