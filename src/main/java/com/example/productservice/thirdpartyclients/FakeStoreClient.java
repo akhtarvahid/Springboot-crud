@@ -3,6 +3,7 @@ package com.example.productservice.thirdpartyclients;
 import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,13 @@ import org.springframework.web.client.RestTemplate;
 public class FakeStoreClient {
 
     private RestTemplateBuilder restTemplateBuilder;
-    private String getProductUrl = "https://fakestoreapi.com/products/{id}";
     private String genericProductUrl = "https://fakestoreapi.com/products";
-
+    private String getProductUrl;
 
     @Autowired
-    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder) {
+    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder, @Value("${fakeStore.api.url}") String fakeStoreApiUrl) {
         this.restTemplateBuilder = restTemplateBuilder;
+        this.getProductUrl = fakeStoreApiUrl;
     }
 
 
