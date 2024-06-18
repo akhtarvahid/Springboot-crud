@@ -15,6 +15,7 @@ public class Product extends BaseModel{
     private String title;
     private String description;
     private Double price;
+    // One Category can have multiple products
     @ManyToOne
     private Category category;
 }
