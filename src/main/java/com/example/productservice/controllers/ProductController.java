@@ -51,6 +51,7 @@ public class ProductController {
     public Product deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         return  productService.deleteProduct(id);
     }
+
 //    public  String getProductByCategory(String category) {
 //
 //    }

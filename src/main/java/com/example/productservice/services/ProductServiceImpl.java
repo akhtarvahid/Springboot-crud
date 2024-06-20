@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @Qualifier("SelfProductService")
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
     private CategoryRepo categoryRepo;
 
@@ -29,13 +29,13 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return productRepo.findAll();
     }
 
     @Override
     public Product createProduct(Product product) {
         Optional<Category> categoryOptional = this.categoryRepo.findByName(product.getCategory().getName());
-        if(categoryOptional.isPresent()){
+        if (categoryOptional.isPresent()) {
             product.setCategory(categoryOptional.get());
         } else {
             Category category = categoryRepo.save(product.getCategory());
@@ -44,27 +44,27 @@ public class ProductServiceImpl implements ProductService{
         return this.productRepo.save(product);
     }
 
-        @Override
-        public Product updateProduct(Product updatedProduct) {
+    @Override
+    public Product updateProduct(Product updatedProduct) {
         Product product = productRepo.findById(updatedProduct.getId()).get();
 
-        if(product != null) {
-          product.setTitle(updatedProduct.getTitle());
-          product.setId(updatedProduct.getId());
-          product.setPrice(updatedProduct.getPrice());
-          product.setDescription(updatedProduct.getDescription());
-          Category category = product.getCategory();
-          if(category != null) {
-              category.setName(updatedProduct.getCategory().getName());
-          }
-          product.setCategory(category);
+        if (product != null) {
+            product.setTitle(updatedProduct.getTitle());
+            product.setId(updatedProduct.getId());
+            product.setPrice(updatedProduct.getPrice());
+            product.setDescription(updatedProduct.getDescription());
+            Category category = product.getCategory();
+            if (category != null) {
+                category.setName(updatedProduct.getCategory().getName());
+            }
+            product.setCategory(category);
         }
         return this.productRepo.save(product);
     }
 
     @Override
     public Product deleteProduct(Long id) {
-     return null;
+        return null;
     }
 
     @Override
