@@ -44,9 +44,22 @@ public class ProductServiceImpl implements ProductService{
         return this.productRepo.save(product);
     }
 
-    @Override
-    public void updateProduct() {
+        @Override
+        public Product updateProduct(Product updatedProduct) {
+        Product product = productRepo.findById(updatedProduct.getId()).get();
 
+        if(product != null) {
+          product.setTitle(updatedProduct.getTitle());
+          product.setId(updatedProduct.getId());
+          product.setPrice(updatedProduct.getPrice());
+          product.setDescription(updatedProduct.getDescription());
+          Category category = product.getCategory();
+          if(category != null) {
+              category.setName(updatedProduct.getCategory().getName());
+          }
+          product.setCategory(category);
+        }
+        return this.productRepo.save(product);
     }
 
     @Override
