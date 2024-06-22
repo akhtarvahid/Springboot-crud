@@ -16,7 +16,7 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    public ProductController(@Qualifier("FakeProductService") ProductService productService) {
+    public ProductController(@Qualifier("SelfProductService") ProductService productService) {
         this.productService = productService;
     }
 
@@ -37,15 +37,21 @@ public class ProductController {
 
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
-        System.out.println(product);
+        System.out.println(product.getTitle());
 
         return productService.createProduct(product);
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@RequestBody Product product) {
+        return productService.updateProduct(product);
     }
 
     @DeleteMapping("/{id}")
     public Product deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         return  productService.deleteProduct(id);
     }
+
 //    public  String getProductByCategory(String category) {
 //
 //    }

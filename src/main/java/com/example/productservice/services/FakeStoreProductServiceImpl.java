@@ -6,14 +6,8 @@ import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import com.example.productservice.thirdpartyclients.FakeStoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,8 +45,8 @@ public class FakeStoreProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProduct() {
-
+    public Product updateProduct(Product product) {
+       return null;
     }
 
     @Override
