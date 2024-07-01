@@ -24,4 +24,6 @@ public class Product extends BaseModel{
     @JoinColumn(name="product_id")
     @JsonIgnoreProperties("products")
     private Category category;
+
+    private Integer rating;
 }
