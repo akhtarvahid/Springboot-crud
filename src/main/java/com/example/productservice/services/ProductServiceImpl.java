@@ -5,12 +5,13 @@ import com.example.productservice.models.Product;
 import com.example.productservice.repository.CategoryRepo;
 import com.example.productservice.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
-@Qualifier("SelfProductService")
+@Primary
+@Service("SelfProductService")
 public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
     private CategoryRepo categoryRepo;
