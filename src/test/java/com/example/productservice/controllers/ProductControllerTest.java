@@ -20,7 +20,7 @@ class ProductControllerTest {
     private ProductService productService;
 
     @Test
-    void getProduct() throws ProductNotFoundException {
+    void getProductById() throws ProductNotFoundException {
         // Arrange
         Product dummyProduct = new Product();
         dummyProduct.setId(1L);
@@ -32,5 +32,19 @@ class ProductControllerTest {
 
         // Assert
         assertEquals(1L, product.getId());
+    }
+
+    @Test
+    void getProductByIdThrowsException() throws ProductNotFoundException {
+        // Arrange
+        Product dummyProduct = new Product();
+        dummyProduct.setId(1L);
+        dummyProduct.setTitle("Dummy test product title");
+        when(productService.getProductById(1L)).thenThrow(new ProductNotFoundException("Product not found"));
+
+
+
+        // Assert
+        assertThrows(ProductNotFoundException.class, ()-> productController.getProduct(1L));
     }
 }
