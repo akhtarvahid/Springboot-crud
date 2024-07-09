@@ -55,8 +55,8 @@ public class FakeStoreProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void deleteAllProducts() {
-
+    public List<Product> deleteAllProducts(List<Long> ids) {
+        return null;
     }
 
     private Product getProductsFromFakeStoreProductDto(FakeStoreProductDto fakeStoreProductDto) {
