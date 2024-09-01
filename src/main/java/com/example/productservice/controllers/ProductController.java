@@ -27,10 +27,10 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id, @RequestHeader("authToken") String authToken) throws ProductNotFoundException {
-        UserDto userDto = authCommons.authenticate(authToken);
+        UserDto userDto = authCommons.authenticate(authToken); // another check whether token valid or not in user-service
         ResponseEntity<Product> responseEntity;
         if (userDto == null) {
-            responseEntity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
             return responseEntity.getBody(); // Diff
         }
         Product product = productService.getProductById(id);
