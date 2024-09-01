@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    //    @Autowired
     private ProductService productService;
     private AuthCommons authCommons;
 
@@ -26,14 +25,9 @@ public class ProductController {
         this.authCommons = authCommons;
     }
 
-//    @Autowired
-//    public void setProductService(ProductService productService) {
-//        this.productService = productService;
-//    }
-
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id, @PathVariable("authToken") String token) throws ProductNotFoundException {
-        UserDto userDto = authCommons.authenticate(token);
+    public Product getProduct(@PathVariable("id") Long id, @RequestHeader("authToken") String authToken) throws ProductNotFoundException {
+        UserDto userDto = authCommons.authenticate(authToken);
         ResponseEntity<Product> responseEntity;
         if (userDto == null) {
             responseEntity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
