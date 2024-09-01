@@ -1,10 +1,14 @@
 package com.example.productservice.controllers;
 
+import com.example.productservice.common.AuthCommons;
+import com.example.productservice.dtos.userServiceConnection.UserDto;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
 import com.example.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,12 +16,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-//    @Autowired
+    //    @Autowired
     private ProductService productService;
+    private AuthCommons authCommons;
 
     @Autowired
-    public ProductController(@Qualifier("SelfProductService") ProductService productService) {
+    public ProductController(@Qualifier("SelfProductService") ProductService productService, AuthCommons authCommons) {
         this.productService = productService;
+        this.authCommons = authCommons;
     }
 
 //    @Autowired
@@ -26,8 +32,16 @@ public class ProductController {
 //    }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
-      return productService.getProductById(id);
+    public Product getProduct(@PathVariable("id") Long id, @PathVariable("authToken") String token) throws ProductNotFoundException {
+        UserDto userDto = authCommons.authenticate(token);
+        ResponseEntity<Product> responseEntity;
+        if (userDto == null) {
+            responseEntity = new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return responseEntity.getBody(); // Diff
+        }
+        Product product = productService.getProductById(id);
+        responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        return responseEntity.getBody();
     }
 
     @GetMapping()
@@ -49,7 +63,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public Product deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
-        return  productService.deleteProduct(id);
+        return productService.deleteProduct(id);
     }
 
     @DeleteMapping("/bulkDelete/{id}")
