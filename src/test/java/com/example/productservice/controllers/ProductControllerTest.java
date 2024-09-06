@@ -28,7 +28,7 @@ class ProductControllerTest {
         when(productService.getProductById(1L)).thenReturn(dummyProduct);
 
         // Act
-        Product product = productController.getProduct(1L, null);
+        Product product = productController.getProduct(1L);
 
         // Assert
         assertEquals(1L, product.getId());
@@ -45,6 +45,6 @@ class ProductControllerTest {
 
 
         // Assert
-        assertThrows(ProductNotFoundException.class, ()-> productController.getProduct(1L, null));
+        assertThrows(ProductNotFoundException.class, ()-> productController.getProduct(1L));
     }
 }

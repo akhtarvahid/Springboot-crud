@@ -26,13 +26,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id, @RequestHeader("authToken") String authToken) throws ProductNotFoundException {
-        UserDto userDto = authCommons.authenticate(authToken); // another check whether token valid or not in user-service
+    public Product getProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         ResponseEntity<Product> responseEntity;
-        if (userDto == null) {
-            responseEntity = new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-            return responseEntity.getBody(); // Diff
-        }
+
         Product product = productService.getProductById(id);
         responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
         return responseEntity.getBody();
