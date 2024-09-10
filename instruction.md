@@ -20,8 +20,16 @@ To
 
 
 
-AWS RDS
-RDS(VPC security groups) instance should have security-group-rule with below configuration otherwise host connection will fail.
+AWS RDS configuration steps to follow
+1. Create RDS database and pass Endpoint & port to
+
+```js
+
+  jdbc:postgresql://<Endpoint>:<PORT_NUMBER>/postgres
+
+```
+
+2. RDS(VPC security groups) instance should have security-group-rule with below configuration otherwise host connection will fail.
 
 ```js
 
