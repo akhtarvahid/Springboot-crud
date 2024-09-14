@@ -7,6 +7,7 @@ import com.example.productservice.models.Product;
 import com.example.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +36,9 @@ public class ProductController {
     }
 
     @GetMapping()
-    public List<Product> getProducts() {
-        return productService.getAllProducts();
+    public Page<Product> getProducts(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize) {
+
+        return productService.getAllProducts(pageNo, pageSize);
     }
 
     @PostMapping
