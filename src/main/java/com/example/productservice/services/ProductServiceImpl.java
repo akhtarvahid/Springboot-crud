@@ -33,7 +33,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAllProducts(int pageNo, int pageSize) {
-        return productRepo.findAll(PageRequest.of(pageNo, pageSize, Sort.by("id").ascending()));
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by("id").ascending());
+        return productRepo.findAll(pageable);
     }
 
     @Override
