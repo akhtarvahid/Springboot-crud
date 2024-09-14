@@ -21,7 +21,9 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.idea/*
 .idea
+
 
 # Packages #
 ############
