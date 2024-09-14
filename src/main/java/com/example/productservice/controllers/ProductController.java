@@ -36,8 +36,10 @@ public class ProductController {
     }
 
     @GetMapping()
-    public Page<Product> getProducts(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo, @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize) {
-        return productService.getAllProducts(pageNo, pageSize);
+    public Page<Product> getProducts(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                     @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize,
+                                     @RequestParam(value = "sort", defaultValue = "id") String title) {
+        return productService.getAllProducts(pageNo, pageSize, title);
     }
 
     @PostMapping
