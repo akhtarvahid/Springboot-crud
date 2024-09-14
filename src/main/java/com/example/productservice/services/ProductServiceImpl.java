@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -32,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAllProducts(int pageNo, int pageSize) {
-        return productRepo.findAll(PageRequest.of(pageNo, pageSize));
+        return productRepo.findAll(PageRequest.of(pageNo, pageSize, Sort.by("id").ascending()));
     }
 
     @Override
