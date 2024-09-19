@@ -6,7 +6,6 @@ import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import com.example.productservice.thirdpartyclients.FakeStoreClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -18,10 +17,6 @@ import java.util.List;
 @Service("FakeProductService")
 public class FakeStoreProductServiceImpl implements ProductService{
     private FakeStoreClient fakeStoreClient;
-
-    private RestTemplateBuilder restTemplateBuilder;
-    private String getProductUrl = "https://fakestoreapi.com/products/{id}";
-    private String genericProductUrl = "https://fakestoreapi.com/products";
 
     @Autowired
     public FakeStoreProductServiceImpl(FakeStoreClient fakeStoreClient) {
