@@ -21,7 +21,7 @@ public class ProductController {
     private AuthCommons authCommons;
 
     @Autowired
-    public ProductController(@Qualifier("SelfProductService") ProductService productService, AuthCommons authCommons) {
+    public ProductController(@Qualifier("FakeProductService") ProductService productService, AuthCommons authCommons) {
         this.productService = productService;
         this.authCommons = authCommons;
     }
