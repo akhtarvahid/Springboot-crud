@@ -37,3 +37,14 @@ PROTOCOL   PORT   SOURCE
 TCP        5432   0.0.0.0/0
 
 ```
+
+
+3. Install and Start redis server in the terminal
+
+```js
+
+brew install redis
+
+redis-server
+
+```
