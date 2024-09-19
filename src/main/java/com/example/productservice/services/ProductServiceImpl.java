@@ -20,10 +20,12 @@ import java.util.*;
 public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
     private CategoryRepo categoryRepo;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    public ProductServiceImpl(ProductRepo productRepo, CategoryRepo categoryRepo) {
+    public ProductServiceImpl(ProductRepo productRepo, CategoryRepo categoryRepo, RedisTemplate redisTemplate) {
         this.productRepo = productRepo;
         this.categoryRepo = categoryRepo;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
