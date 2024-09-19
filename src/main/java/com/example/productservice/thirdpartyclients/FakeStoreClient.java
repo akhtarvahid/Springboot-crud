@@ -1,9 +1,9 @@
 package com.example.productservice.thirdpartyclients;
 
 import com.example.productservice.dtos.FakeStoreProductDto;
-import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -34,6 +34,8 @@ public class FakeStoreClient {
     public Product getProductById(Long id) {
         RestTemplate restTemplate = restTemplateBuilder.build();
 
+        String productUrl = getProductUrl + "/" + id;
+
         Product productResult = (Product) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCTS_" + id);
 
         if (productResult != null) {
@@ -42,7 +44,10 @@ public class FakeStoreClient {
         }
 
 
-        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class, id);
+        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(productUrl, FakeStoreProductDto.class, id);
+
+        System.out.println(new Gson().toJson(responseEntity.getBody()));
+
         Product response = getProductsFromFakeStoreProductDto(responseEntity.getBody());
 
         redisTemplate.opsForHash().put("PRODUCTS", "PRODUCTS_" + id, response);
@@ -52,13 +57,15 @@ public class FakeStoreClient {
 
     private Product getProductsFromFakeStoreProductDto(FakeStoreProductDto fakeStoreProductDto) {
         Product product = new Product();
-//        product.setId(fakeStoreProductDto.getId());
-        product.setTitle(fakeStoreProductDto.getTitle());
-        product.setDescription(fakeStoreProductDto.getDescription());
-        Category category = new Category();
-        category.setName(fakeStoreProductDto.getCategory());
-        product.setCategory(category);
-        product.setPrice(fakeStoreProductDto.getPrice());
+        if (fakeStoreProductDto != null) {
+            //      product.setId(fakeStoreProductDto.getId());
+            product.setTitle(fakeStoreProductDto.getTitle());
+            product.setDescription(fakeStoreProductDto.getDescription());
+            Category category = new Category();
+            category.setName(fakeStoreProductDto.getCategory());
+            product.setCategory(category);
+            product.setPrice(fakeStoreProductDto.getPrice());
+        }
         return product;
     }
 

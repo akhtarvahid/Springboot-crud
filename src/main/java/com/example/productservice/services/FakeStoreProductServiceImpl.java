@@ -5,6 +5,7 @@ import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import com.example.productservice.thirdpartyclients.FakeStoreClient;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,10 @@ public class FakeStoreProductServiceImpl implements ProductService{
 
     @Override
     public Product getProductById(Long id) throws ProductNotFoundException {
-        return fakeStoreClient.getProductById(id);
+        Product product = fakeStoreClient.getProductById(id);
+        System.out.println("PRODUCT SERVICE");
+        System.out.println(new Gson().toJson(product));
+        return product;
     }
 
     @Override

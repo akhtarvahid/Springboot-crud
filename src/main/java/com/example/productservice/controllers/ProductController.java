@@ -1,7 +1,6 @@
 package com.example.productservice.controllers;
 
 import com.example.productservice.common.AuthCommons;
-import com.example.productservice.dtos.userServiceConnection.UserDto;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
 import com.example.productservice.services.ProductService;
