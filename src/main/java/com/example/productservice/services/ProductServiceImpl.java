@@ -1,16 +1,14 @@
 package com.example.productservice.services;
 
+import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import com.example.productservice.repository.CategoryRepo;
 import com.example.productservice.repository.ProductRepo;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,12 +18,10 @@ import java.util.*;
 public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
     private CategoryRepo categoryRepo;
-    private RedisTemplate<String, Object> redisTemplate;
 
-    public ProductServiceImpl(ProductRepo productRepo, CategoryRepo categoryRepo, RedisTemplate redisTemplate) {
+    public ProductServiceImpl(ProductRepo productRepo, CategoryRepo categoryRepo) {
         this.productRepo = productRepo;
         this.categoryRepo = categoryRepo;
-        this.redisTemplate = redisTemplate;
     }
 
     @Override

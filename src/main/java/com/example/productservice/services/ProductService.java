@@ -1,5 +1,6 @@
 package com.example.productservice.services;
 
+import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
 import org.springframework.data.domain.Page;
