@@ -37,3 +37,11 @@ PROTOCOL   PORT   SOURCE
 TCP        5432   0.0.0.0/0
 
 ```
+
+
+### How to create and run multiple instances.
+1. add this `server.port=${SERVER_PORT}` to application.properties
+2. Got to `Run->Edit configurations`
+3. Select `ProductServiceApplication` under Spring Boot and click on `copy configuration` as many as you want server(instances).
+4. Run all ProductServiceApplication, ProductServiceApplication(1), ProductServiceApplication(2)...etc one by one.
+5. Go to http://localhost:8761/ to see all the instances running
