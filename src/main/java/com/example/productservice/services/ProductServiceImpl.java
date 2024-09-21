@@ -6,6 +6,10 @@ import com.example.productservice.repository.CategoryRepo;
 import com.example.productservice.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -28,8 +32,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepo.findAll();
+    public Page<Product> getAllProducts(int pageNo, int pageSize, String title) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(title).ascending());
+        return productRepo.findAll(pageable);
     }
 
     @Override
