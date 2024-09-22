@@ -42,10 +42,11 @@ public class ProductController {
     public Product getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         ResponseEntity<Product> responseEntity;
 
+        System.out.println("API-GATEWAY PRODUCT" + id);
        // Make a call to user-service
         UserDto userDto = restTemplate.getForObject("http://userservice/users/" + id, UserDto.class);
 
-        Product product = productService.getProductById(id);
+        Product product = productService.getSingleProduct(id);
         responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
         return responseEntity.getBody();
     }

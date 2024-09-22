@@ -1,5 +1,6 @@
 package com.example.productservice.services;
 
+import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Category;
 import com.example.productservice.models.Product;
 import com.example.productservice.repository.CategoryRepo;
@@ -27,6 +28,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
+        Optional<Product> product = productRepo.findById(id);
+        return product.get();
+    }
+
+    @Override
+    public Product getSingleProduct(Long id) throws ProductNotFoundException {
         Optional<Product> product = productRepo.findById(id);
         return product.get();
     }
