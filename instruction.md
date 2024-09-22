@@ -46,3 +46,10 @@ TCP        5432   0.0.0.0/0
 4. Run all ProductServiceApplication, ProductServiceApplication(1), ProductServiceApplication(2)...etc one by one.
 5. Go to http://localhost:8761/ to see all the instances running 
 6. And `SERVER_PORT=8080`, `SERVER_PORT=8081`, `SERVER_PORT=8082`...etc inside Environment variables as many instances created
+
+
+Steps to run the application through api-gateway
+1. Run Product service and service discovery
+2. once services and service-discovery is up
+3. Run api-gateway-springboot-mss
+4. Test http://localhost:9000/products/10 in browser or postman
