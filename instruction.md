@@ -53,3 +53,4 @@ Steps to run the application through api-gateway
 2. once services and service-discovery is up
 3. Run api-gateway-springboot-mss
 4. Test http://localhost:9000/products/10 in browser or postman
+5. Request multiple times and check the response in `product-service` instances running through api-gateway and requests will go to across instances through load-balancing.
