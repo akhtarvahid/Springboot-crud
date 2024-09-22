@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -19,16 +20,30 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
     private AuthCommons authCommons;
+    private RestTemplate restTemplate;
 
     @Autowired
-    public ProductController(@Qualifier("SelfProductService") ProductService productService, AuthCommons authCommons) {
+    public ProductController(@Qualifier("SelfProductService") ProductService productService, AuthCommons authCommons, RestTemplate restTemplate) {
         this.productService = productService;
         this.authCommons = authCommons;
+        this.restTemplate = restTemplate;
     }
 
     @GetMapping("/{id}")
     public Product getProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         ResponseEntity<Product> responseEntity;
+
+        Product product = productService.getProductById(id);
+        responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
+        return responseEntity.getBody();
+    }
+
+    @GetMapping("/single/{id}")
+    public Product getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+        ResponseEntity<Product> responseEntity;
+
+       // Make a call to user-service
+        UserDto userDto = restTemplate.getForObject("http://userservice/users/" + id, UserDto.class);
 
         Product product = productService.getProductById(id);
         responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
