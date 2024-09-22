@@ -23,7 +23,8 @@ local.properties
 .recommenders
 .idea/*
 .idea
-
+.env_prod/
+.env_prod/*
 
 # Packages #
 ############
