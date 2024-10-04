@@ -1,4 +1,12 @@
-## Springboot-crud
+# Springboot-crud
+
+--------
+
+### Follow steps to run `Springboot-crud` application.
+
+1. Clone and run [service-discovery](https://github.com/akhtarvahid/service-discovery) application
+2. Clone and run [user-service](https://github.com/akhtarvahid/user-service/blob/master/instruction.md#user-service) application
+3. Follow below steps to run springboot-crud app
 
 
 Docker command to start postgres
@@ -24,22 +32,26 @@ AWS RDS configuration steps to follow
 1. Create RDS database and pass Endpoint & port to
 
 ```js
-
   jdbc:postgresql://<Endpoint>:<PORT_NUMBER>/postgres
-
 ```
 
 2. RDS(VPC security groups) instance should have security-group-rule with below configuration otherwise host connection will fail.
 
 ```js
-
 PROTOCOL   PORT   SOURCE
 TCP        5432   0.0.0.0/0
-
 ```
 
 
+-------
+-------------------------- Steps wise instruction to run application using api gateway --------------------------
+
+
+
 ### How to create and run multiple instances.
+
+--------
+
 1. add this `server.port=${SERVER_PORT}` to application.properties
 2. Got to `Run->Edit configurations`
 3. Select `ProductServiceApplication` under Spring Boot and click on `copy configuration` as many as you want server(instances).
@@ -48,7 +60,10 @@ TCP        5432   0.0.0.0/0
 6. And `SERVER_PORT=8080`, `SERVER_PORT=8081`, `SERVER_PORT=8082`...etc inside Environment variables as many instances created
 
 
-Steps to run the application through api-gateway
+### Steps to run the application through api-gateway
+
+--------
+
 1. Run Product service and service discovery
 2. once services and service-discovery is up
 3. Run api-gateway-springboot-mss
