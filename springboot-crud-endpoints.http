@@ -1,0 +1,10 @@
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "title": "second post",
+  "description": "Let's learn and grow",
+  "price": 342,
+  "category": {},
+  "rating": 1
+}
