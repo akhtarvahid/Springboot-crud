@@ -83,9 +83,4 @@ public class ProductController {
     public List<Product> getAllProducts(@PathVariable("id") List<Long> ids) throws ProductNotFoundException {
         return productService.deleteAllProducts(ids);
     }
-
-//    public  String getProductByCategory(String category) {
-//
-//    }
-
 }
