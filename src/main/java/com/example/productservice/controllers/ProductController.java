@@ -1,12 +1,12 @@
 package com.example.productservice.controllers;
 
 import com.example.productservice.common.AuthCommons;
-import com.example.productservice.dtos.userServiceConnection.UserDto;
 import com.example.productservice.exceptions.ProductNotFoundException;
 import com.example.productservice.models.Product;
 import com.example.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class ProductController {
     private AuthCommons authCommons;
 
     @Autowired
-    public ProductController(@Qualifier("SelfProductService") ProductService productService, AuthCommons authCommons) {
+    public ProductController(@Qualifier("FakeProductService") ProductService productService, AuthCommons authCommons) {
         this.productService = productService;
         this.authCommons = authCommons;
     }
@@ -35,8 +35,10 @@ public class ProductController {
     }
 
     @GetMapping()
-    public List<Product> getProducts() {
-        return productService.getAllProducts();
+    public Page<Product> getProducts(@RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+                                     @RequestParam(value = "pageSize", defaultValue = "1000") int pageSize,
+                                     @RequestParam(value = "sort", defaultValue = "id") String title) {
+        return productService.getAllProducts(pageNo, pageSize, title);
     }
 
     @PostMapping
